@@ -1,29 +1,6 @@
 {
- "updated": "2026-07-27T17:26:45",
+ "updated": "2026-07-27T20:59:35",
  "events": {
-  "212821": {
-   "id": "212821",
-   "film": "Odyssea",
-   "filmLink": "https://www.cinemacity.cz/films/odyssea/7268s2r",
-   "cinema": "Praha Flora, OC FLORA",
-   "cinemaId": "1052",
-   "datetime": "2026-07-27T20:30:00",
-   "auditorium": "IMAX VOLVO",
-   "attrs": [
-    "15-plus",
-    "2d",
-    "70-mm",
-    "drama",
-    "first-subbed-lang-cs",
-    "history",
-    "original-lang-en",
-    "subbed"
-   ],
-   "presentationCode": "212821",
-   "booking": "https://tickets.cinemacity.cz/order/212821",
-   "soldOut": false,
-   "availabilityRatio": 0.0026
-  },
   "220776": {
    "id": "220776",
    "film": "Odyssea",
@@ -45,7 +22,7 @@
    "presentationCode": "220776",
    "booking": "https://tickets.cinemacity.cz/order/220776",
    "soldOut": false,
-   "availabilityRatio": 0.0156
+   "availabilityRatio": 0.0208
   },
   "212822": {
    "id": "212822",
@@ -275,7 +252,7 @@
    "presentationCode": "220778",
    "booking": "https://tickets.cinemacity.cz/order/220778",
    "soldOut": false,
-   "availabilityRatio": 0.0338
+   "availabilityRatio": 0.0312
   },
   "212830": {
    "id": "212830",
@@ -390,7 +367,7 @@
    "presentationCode": "220779",
    "booking": "https://tickets.cinemacity.cz/order/220779",
    "soldOut": false,
-   "availabilityRatio": 0.0545
+   "availabilityRatio": 0.0234
   },
   "212834": {
    "id": "212834",
@@ -436,7 +413,7 @@
    "presentationCode": "212835",
    "booking": "https://tickets.cinemacity.cz/order/212835",
    "soldOut": false,
-   "availabilityRatio": 0.0052
+   "availabilityRatio": 0.0104
   },
   "212836": {
    "id": "212836",
@@ -505,7 +482,7 @@
    "presentationCode": "220780",
    "booking": "https://tickets.cinemacity.cz/order/220780",
    "soldOut": false,
-   "availabilityRatio": 0.0571
+   "availabilityRatio": 0.0286
   },
   "212838": {
    "id": "212838",
@@ -620,7 +597,7 @@
    "presentationCode": "220781",
    "booking": "https://tickets.cinemacity.cz/order/220781",
    "soldOut": false,
-   "availabilityRatio": 0.026
+   "availabilityRatio": 0.0208
   },
   "212842": {
    "id": "212842",
@@ -643,7 +620,7 @@
    "presentationCode": "212842",
    "booking": "https://tickets.cinemacity.cz/order/212842",
    "soldOut": false,
-   "availabilityRatio": 0.0078
+   "availabilityRatio": 0.0052
   },
   "212843": {
    "id": "212843",
@@ -735,7 +712,7 @@
    "presentationCode": "220782",
    "booking": "https://tickets.cinemacity.cz/order/220782",
    "soldOut": false,
-   "availabilityRatio": 0.026
+   "availabilityRatio": 0.0156
   },
   "220709": {
    "id": "220709",
@@ -1310,7 +1287,7 @@
    "presentationCode": "220733",
    "booking": "https://tickets.cinemacity.cz/order/220733",
    "soldOut": false,
-   "availabilityRatio": 0.0208
+   "availabilityRatio": 0.0182
   },
   "220734": {
    "id": "220734",
