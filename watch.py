@@ -20,6 +20,7 @@ from zoneinfo import ZoneInfo
 
 SITE_ID = "10101"  # cinemacity.cz
 BASE = f"https://www.cinemacity.cz/cz/data-api-service/v1/quickbook/{SITE_ID}"
+TICKETS_BASE = "https://tickets.cinemacity.cz/api"
 LANG = "cs_CZ"
 UA = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
@@ -33,6 +34,21 @@ HORIZON_DAYS = int(os.environ.get("HORIZON_DAYS", "180"))
 # IMAX sály. Doplňuje (nenahrazuje) sondu podle názvu sálu.
 HINT_ATTR = os.environ.get("HINT_ATTR", "70-mm")
 DELAY = float(os.environ.get("REQUEST_DELAY", "0.25"))
+
+# soldOut z quickbook API počítá i vozíčkářská/doprovodná místa jako
+# "obsazeno" i "volno" nekonzistentně — u téměř vyprodaných představení proto
+# soldOut umí být False, i když fakticky zbývá jen pár míst pro vozíčkáře.
+# Přesná obsazenost po sedadlech (tickets.cinemacity.cz/api/seats/seats-statusV2)
+# je za Cloudflare ochranou, která blokuje skriptované volání (ověřeno: curl
+# i fetch/XHR z reálné browser session dostanou 403, projde jen navigace
+# živým prohlížečem) — nedá se tedy spolehlivě strojově číst. Místo přesných
+# sedadel proto jen odhad: kolik míst reálně zbývá (availabilityRatio × počet
+# sedadel v sále, obojí veřejné a nechráněné) a heuristika, že hrstka
+# zbývajících míst je nejspíš ta vozíčkářská.
+AVAILABILITY_CHECK = os.environ.get("AVAILABILITY_CHECK", "1") != "0"
+MIN_FREE_SEATS = int(os.environ.get("MIN_FREE_SEATS", "6"))
+
+_capacity_cache = {}
 
 CZ_DAYS = ["po", "út", "st", "čt", "pá", "so", "ne"]
 
@@ -61,6 +77,68 @@ def api(path):
             last = exc
             time.sleep(2 ** attempt)
     raise SystemExit(f"API selhalo po 4 pokusech: {url}\n{last}")
+
+
+def tickets_api(path, method="GET"):
+    """GET/POST na tickets.cinemacity.cz; vrací rovnou celý JSON.
+
+    Jen pro veřejné, nechráněné endpointy (presentations, seatplanV2) —
+    seats-statusV2 (skutečná obsazenost sedadel) tudy záměrně nejde, viz
+    komentář u AVAILABILITY_CHECK.
+    """
+    url = f"{TICKETS_BASE}{path}"
+    last = None
+    for attempt in range(4):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": UA}, method=method)
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                return json.loads(resp.read().decode("utf-8"))
+        except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as exc:
+            last = exc
+            time.sleep(2 ** attempt)
+    raise RuntimeError(f"tickets API selhalo po 4 pokusech: {url}\n{last}")
+
+
+def seatplan_capacity(venue_id, seatplan_id):
+    """Celkový počet sedadel v sále, spočítaný z veřejného plánu sálu."""
+    key = (venue_id, seatplan_id)
+    if key in _capacity_cache:
+        return _capacity_cache[key]
+    body = tickets_api(f"/seats/seatplanV2?venueId={venue_id}&seatplanId={seatplan_id}", method="POST")
+    total = sum(
+        len(row.get("S", {}))
+        for section in body.get("S", {}).values()
+        for group in section.get("G", {}).values()
+        for row in group.get("R", {}).values()
+    )
+    _capacity_cache[key] = total
+    return total
+
+
+def enrich_availability(event):
+    """Doplní event o odhad volných míst a heuristiku „jen vozíčkářská místa“.
+
+    Fail-soft: cokoliv se tu nepovede (síť, neočekávaný tvar odpovědi),
+    event zůstane jen s tím, co už měl (raw soldOut z quickbook) — hlídání
+    nesmí kvůli téhle doplňkové sondě spadnout.
+    """
+    ratio = event.get("availabilityRatio")
+    if ratio is None:
+        return
+    try:
+        time.sleep(DELAY)
+        presentation = tickets_api(f"/presentations/{event['presentationCode']}?referralMiniSiteId=0")[
+            "presentation"
+        ]
+        time.sleep(DELAY)
+        capacity = seatplan_capacity(presentation["venueId"], presentation["seatplanId"])
+        if not capacity:
+            return
+        free = round(ratio * capacity)
+        event["freeSeats"] = free
+        event["likelyWheelchairOnly"] = (not event["soldOut"]) and free <= MIN_FREE_SEATS
+    except Exception:
+        pass
 
 
 def horizon():
@@ -143,8 +221,10 @@ def collect():
                     # skončí na prosté adrese /order/{id}, která funguje i na
                     # GET a otevře rovnou výběr sedadel. Pozor, parametr lang
                     # tady dělá 404 — musí se vynechat.
+                    "presentationCode": e.get("presentationCode") or e["id"],
                     "booking": f"https://tickets.cinemacity.cz/order/{e.get('presentationCode') or e['id']}",
                     "soldOut": bool(e.get("soldOut")),
+                    "availabilityRatio": e.get("availabilityRatio"),
                 }
     return found
 
@@ -212,6 +292,10 @@ def render(new_events, gone_events):
                     flags.append("dabing")
                 if e["soldOut"]:
                     flags.append("**vyprodáno**")
+                elif e.get("likelyWheelchairOnly"):
+                    flags.append(f"**vyprodáno** (odhadem zbývá jen {e['freeSeats']} míst — nejspíš vozíčkářská)")
+                elif "freeSeats" in e:
+                    flags.append(f"~{e['freeSeats']} volných")
                 suffix = f" — {', '.join(flags)}" if flags else ""
                 link = f" — [koupit]({e['booking']})" if e["booking"] else ""
                 lines.append(f"- {fmt_dt(e['datetime'])} · {e['auditorium']}{suffix}{link}")
@@ -305,6 +389,10 @@ def main():
         print("Nic nového.")
         gh_output(has_news="false")
         return
+
+    if AVAILABILITY_CHECK:
+        for e in new_events:
+            enrich_availability(e)
 
     body = render(new_events, gone)
     title = title_for(new_events) if new_events else "🎬 Odyssea v IMAXu: zrušené termíny"

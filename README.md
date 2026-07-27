@@ -23,6 +23,13 @@ Běží v GitHub Actions, takže funguje i když je Mac vypnutý.
 - Nová představení → issue s časem, sálem, příznaky (70mm / titulky / vyprodáno)
   a přímým odkazem na nákup vstupenky. Hlásí se i termíny, které z rozpisu
   **zmizely** (zrušené projekce).
+- `soldOut` z quickbook API počítá i vozíčkářská/doprovodná místa nekonzistentně
+  — u téměř vyprodaného představení tak umí ukazovat "volno", i když fakticky
+  zbývá jen pár míst pro vozíčkáře. Watchdog proto k nově nahlášeným
+  představením dopočítává odhad počtu volných míst (`availabilityRatio` ×
+  kapacita sálu z veřejného plánu sálu) a pokud jich zbývá jen hrstka, označí
+  je jako **vyprodáno (odhadem)** místo skutečně volných — viz sekce
+  [Odhad dostupnosti](#odhad-dostupnosti-místo-přesných-sedadel) níže.
 - Issue se **hned po založení zavírá**. Slouží jen jako doručovací kanál pro
   e-mail, který GitHub pošle už při jeho vzniku — seznam otevřených issues tak
   zůstává prázdný a nic není potřeba uklízet ručně. Obsah zůstává čitelný mezi
@@ -53,9 +60,45 @@ Chování jde změnit proměnnými prostředí ve workflow:
 | `HORIZON_DAYS` | `180` | jak daleko dopředu se ptát |
 | `HINT_ATTR` | `70-mm` | atribut pro levné dohledání kandidátských kin |
 | `REQUEST_DELAY` | `0.25` | pauza mezi dotazy na API (s) |
+| `AVAILABILITY_CHECK` | `1` | `0` vypne odhad volných míst, hlásí se jen syrové `soldOut` |
+| `MIN_FREE_SEATS` | `6` | odhadovaný počet volných míst, pod kterým se termín označí jako vyprodaný (vozíčkářská místa) |
 
 Hlídat cokoli jiného (třeba `FILM_PATTERN=dune`, `AUDITORIUM_PATTERN=4dx`) tedy
 znamená přepsat dvě proměnné a smazat `state/seen.json`.
+
+## Odhad dostupnosti místo přesných sedadel
+
+Skutečnou obsazenost po jednotlivých sedadlech (a tedy i to, jestli jsou dvě
+volná místa vedle sebe) nabízí `tickets.cinemacity.cz/api/seats/seats-statusV2`.
+Ten je ale za Cloudflare ochranou, která **cíleně blokuje skriptované volání**
+na tenhle konkrétní endpoint — ověřeno při vývoji:
+
+- prostý `curl` bez session dostane `403` s prázdným tělem,
+- i `fetch`/`XMLHttpRequest` spuštěný v konzoli **uvnitř reálné, přihlášené
+  browser session** (stejné cookies, těsně po úspěšném načtení stránky) dostane
+  `403`,
+- projde jen samotná navigace prohlížeče na `/order/{presentationCode}` —
+  appka si endpoint zavolá sama a dostane `200`.
+
+Jiné endpointy stejného API (`presentations/{id}`, `seats/seatplanV2` — plán
+sálu) touhle ochranou omezené nejsou a fungují i skriptovaně bez session.
+Cílená ochrana právě na živou obsazenost sedadel vypadá jako záměrné
+opatření proti automatizovanému sledování volných míst — obcházet ji
+(headless prohlížeč apod.) by znamenalo stavět nástroj přímo proti tomuhle
+opatření, což tenhle projekt záměrně nedělá.
+
+Místo přesných sedadel se proto počítá jen odhad:
+
+1. `availabilityRatio` u představení z quickbook API (podíl volných míst,
+   0–1) × kapacita sálu spočítaná z veřejného `seatplanV2` (počet sedadel v
+   plánu) = odhadovaný počet volných míst.
+2. Pokud jich zbývá `MIN_FREE_SEATS` nebo méně a `soldOut` přitom hlásí
+   "volno", termín se v hlášení označí jako **vyprodáno (odhadem)** —
+   předpoklad je, že zbývající místa jsou vozíčkářská/doprovodná.
+
+Je to nepřesné (odhad, ne přesný seznam sedadel) a nefunguje z něj detekce
+páru sedadel vedle sebe ani vynechání konkrétních řad — na to by bylo potřeba
+přesně to zablokované API.
 
 ## Chci to hlídat taky (fork)
 
@@ -84,7 +127,7 @@ nahlásí všechny aktuální termíny, i ty už známé — hodí se na ověře
 nebo jako „ukaž mi, co teď hrajou“.
 
 ```bash
-gh workflow run watch.yml --repo TarkDetrius/cinemacity-watchdog -f force_report=true
+gh workflow run watch.yml --repo vkoca/cinemacity-watchdog -f force_report=true
 ```
 
 ## Lokální spuštění
@@ -97,6 +140,13 @@ python3 watch.py --state state/seen.json
 
 Užitečné přepínače: `--seed` (jen zapíše stav, nic nehlásí — dobré po změně
 filtru), `--force-report` (vypíše vše bez ohledu na stav).
+
+Testy (potřebují `pytest`, nic dalšího):
+
+```bash
+pip install pytest
+pytest tests/
+```
 
 ## Údržba
 
