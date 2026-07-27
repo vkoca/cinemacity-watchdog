@@ -47,6 +47,11 @@ DELAY = float(os.environ.get("REQUEST_DELAY", "0.25"))
 # zbývajících míst je nejspíš ta vozíčkářská.
 AVAILABILITY_CHECK = os.environ.get("AVAILABILITY_CHECK", "1") != "0"
 MIN_FREE_SEATS = int(os.environ.get("MIN_FREE_SEATS", "6"))
+# Většina nově vypsaných termínů má od prvního zveřejnění obsazenou naprostou
+# většinu míst (předprodej pro predplatitele apod.) — na tyhle si stejně
+# vstupenky nekoupíš, takže nemá smysl kvůli nim chodit e-mail. Hlásí se proto
+# jen nové termíny, kde odhad volných míst dosahuje aspoň tohohle prahu.
+MIN_REPORT_FREE_SEATS = int(os.environ.get("MIN_REPORT_FREE_SEATS", "10"))
 
 _capacity_cache = {}
 
@@ -113,6 +118,16 @@ def seatplan_capacity(venue_id, seatplan_id):
     )
     _capacity_cache[key] = total
     return total
+
+
+def filter_reportable(events):
+    """Nechá jen termíny s odhadem volných míst >= MIN_REPORT_FREE_SEATS.
+
+    Termín bez odhadu (enrich_availability selhalo, nebo soldOut nemělo
+    availabilityRatio) se bere jako nedostatečný — radši nenahlásit nejistou
+    dostupnost než zaspamovat termínem, na který stejně nejde koupit lístek.
+    """
+    return [e for e in events if e.get("freeSeats") is not None and e["freeSeats"] >= MIN_REPORT_FREE_SEATS]
 
 
 def enrich_availability(event):
@@ -385,14 +400,20 @@ def main():
 
     save_state(args.state, prune_past(current))
 
+    if AVAILABILITY_CHECK:
+        for e in new_events:
+            enrich_availability(e)
+        if not args.force_report:
+            reportable = filter_reportable(new_events)
+            skipped = len(new_events) - len(reportable)
+            if skipped:
+                print(f"Přeskočeno {skipped} nových termínů s odhadem < {MIN_REPORT_FREE_SEATS} volných míst.")
+            new_events = reportable
+
     if not new_events and not gone:
         print("Nic nového.")
         gh_output(has_news="false")
         return
-
-    if AVAILABILITY_CHECK:
-        for e in new_events:
-            enrich_availability(e)
 
     body = render(new_events, gone)
     title = title_for(new_events) if new_events else "🎬 Odyssea v IMAXu: zrušené termíny"
