@@ -62,6 +62,7 @@ Chování jde změnit proměnnými prostředí ve workflow:
 | `REQUEST_DELAY` | `0.25` | pauza mezi dotazy na API (s) |
 | `AVAILABILITY_CHECK` | `1` | `0` vypne odhad volných míst, hlásí se jen syrové `soldOut` |
 | `MIN_FREE_SEATS` | `6` | odhadovaný počet volných míst, pod kterým se termín označí jako vyprodaný (vozíčkářská místa) |
+| `MIN_REPORT_FREE_SEATS` | `10` | nový termín se nahlásí (e-mail) jen když odhad volných míst dosáhne aspoň tohohle čísla |
 
 Hlídat cokoli jiného (třeba `FILM_PATTERN=dune`, `AUDITORIUM_PATTERN=4dx`) tedy
 znamená přepsat dvě proměnné a smazat `state/seen.json`.
@@ -99,6 +100,22 @@ Místo přesných sedadel se proto počítá jen odhad:
 Je to nepřesné (odhad, ne přesný seznam sedadel) a nefunguje z něj detekce
 páru sedadel vedle sebe ani vynechání konkrétních řad — na to by bylo potřeba
 přesně to zablokované API.
+
+### Hlášení jen od určitého počtu volných míst
+
+Spousta nově vypsaných termínů má už od prvního zveřejnění obsazenou naprostou
+většinu míst (typicky předprodej pro predplatitele) — takové jsou k ničemu,
+vstupenku na ně stejně nekoupíš. `MIN_REPORT_FREE_SEATS` (výchozí `10`) proto
+filtruje **nové termíny** v běžném běhu: e-mailem se pošlou jen ty, kde odhad
+volných míst dosahuje aspoň tohohle prahu. Odfiltrované termíny se přesto
+zapíšou do stavu jako už viděné (aby se sondovaly jen jednou, ne pořád
+dokola) — pokud později uvolní víc míst, watchdog už to nezachytí, protože z
+pohledu ID termínu jde o "už známé" představení. (Chceš-li i tohle — hlásit
+zpětně, když se u známého termínu zlepší dostupnost přes práh — je to
+rozšíření navíc, dnes to takhle nedělá.)
+
+`--force-report` tenhle filtr obchází (ukáže úplně vše, i s malým počtem
+volných míst) — je to ruční "co se teď hraje", ne pravidelné hlášení.
 
 ## Chci to hlídat taky (fork)
 

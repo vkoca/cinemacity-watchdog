@@ -116,3 +116,21 @@ def test_enrich_availability_skips_when_ratio_missing(monkeypatch):
 
     assert calls == []
     assert "freeSeats" not in event
+
+
+def test_filter_reportable_drops_below_threshold():
+    events = [
+        {"freeSeats": watch.MIN_REPORT_FREE_SEATS - 1},
+        {"freeSeats": watch.MIN_REPORT_FREE_SEATS},
+        {"freeSeats": watch.MIN_REPORT_FREE_SEATS + 5},
+    ]
+    kept = watch.filter_reportable(events)
+    assert kept == events[1:]
+
+
+def test_filter_reportable_drops_events_without_estimate():
+    """soldOut i síťová chyba u enrich_availability vede k chybějícímu freeSeats —
+    obojí se má chovat stejně: radši nenahlásit, než hlásit nejistou dostupnost."""
+    events = [{"freeSeats": None}, {}, {"freeSeats": watch.MIN_REPORT_FREE_SEATS}]
+    kept = watch.filter_reportable(events)
+    assert kept == [{"freeSeats": watch.MIN_REPORT_FREE_SEATS}]
