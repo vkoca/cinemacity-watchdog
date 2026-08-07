@@ -1,5 +1,5 @@
 {
- "updated": "2026-08-07T10:19:53",
+ "updated": "2026-08-07T10:32:13",
  "events": {
   "220726": {
    "id": "220726",
@@ -136,29 +136,6 @@
    ],
    "presentationCode": "220731",
    "booking": "https://tickets.cinemacity.cz/order/220731",
-   "soldOut": false,
-   "availabilityRatio": 0.0156
-  },
-  "220732": {
-   "id": "220732",
-   "film": "Odyssea",
-   "filmLink": "https://www.cinemacity.cz/films/odyssea/7268s2r",
-   "cinema": "Praha Flora, OC FLORA",
-   "cinemaId": "1052",
-   "datetime": "2026-08-08T20:30:00",
-   "auditorium": "IMAX VOLVO",
-   "attrs": [
-    "15-plus",
-    "2d",
-    "70-mm",
-    "drama",
-    "first-subbed-lang-cs",
-    "history",
-    "original-lang-en",
-    "subbed"
-   ],
-   "presentationCode": "220732",
-   "booking": "https://tickets.cinemacity.cz/order/220732",
    "soldOut": false,
    "availabilityRatio": 0.0156
   },
@@ -1151,29 +1128,6 @@
    "soldOut": false,
    "availabilityRatio": 0.0442
   },
-  "224506": {
-   "id": "224506",
-   "film": "Odyssea",
-   "filmLink": "https://www.cinemacity.cz/films/odyssea/7268s2r",
-   "cinema": "Praha Flora, OC FLORA",
-   "cinemaId": "1052",
-   "datetime": "2026-08-19T20:30:00",
-   "auditorium": "IMAX VOLVO",
-   "attrs": [
-    "15-plus",
-    "2d",
-    "70-mm",
-    "drama",
-    "first-subbed-lang-cs",
-    "history",
-    "original-lang-en",
-    "subbed"
-   ],
-   "presentationCode": "224506",
-   "booking": "https://tickets.cinemacity.cz/order/224506",
-   "soldOut": false,
-   "availabilityRatio": 0.0234
-  },
   "224507": {
    "id": "224507",
    "film": "Odyssea",
@@ -1310,7 +1264,7 @@
    "presentationCode": "224512",
    "booking": "https://tickets.cinemacity.cz/order/224512",
    "soldOut": false,
-   "availabilityRatio": 0.0649
+   "availabilityRatio": 0.0597
   },
   "224513": {
    "id": "224513",
@@ -1379,7 +1333,7 @@
    "presentationCode": "224515",
    "booking": "https://tickets.cinemacity.cz/order/224515",
    "soldOut": false,
-   "availabilityRatio": 0.0597
+   "availabilityRatio": 0.0649
   },
   "224516": {
    "id": "224516",
