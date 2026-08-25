@@ -1,5 +1,5 @@
 {
- "updated": "2026-08-25T09:51:30",
+ "updated": "2026-08-25T10:52:50",
  "events": {
   "233305": {
    "id": "233305",
@@ -45,7 +45,7 @@
    "presentationCode": "233306",
    "booking": "https://tickets.cinemacity.cz/order/233306",
    "soldOut": false,
-   "availabilityRatio": 0.0338
+   "availabilityRatio": 0.026
   },
   "233307": {
    "id": "233307",
@@ -68,7 +68,7 @@
    "presentationCode": "233307",
    "booking": "https://tickets.cinemacity.cz/order/233307",
    "soldOut": false,
-   "availabilityRatio": 0.0208
+   "availabilityRatio": 0.0156
   },
   "233308": {
    "id": "233308",
@@ -438,29 +438,6 @@
    "soldOut": false,
    "availabilityRatio": 0.0338
   },
-  "233324": {
-   "id": "233324",
-   "film": "Odyssea",
-   "filmLink": "https://www.cinemacity.cz/films/odyssea/7268s2r",
-   "cinema": "Praha Flora, OC FLORA",
-   "cinemaId": "1052",
-   "datetime": "2026-08-30T16:40:00",
-   "auditorium": "IMAX VOLVO",
-   "attrs": [
-    "15-plus",
-    "2d",
-    "70-mm",
-    "drama",
-    "first-subbed-lang-cs",
-    "history",
-    "original-lang-en",
-    "subbed"
-   ],
-   "presentationCode": "233324",
-   "booking": "https://tickets.cinemacity.cz/order/233324",
-   "soldOut": false,
-   "availabilityRatio": 0.0156
-  },
   "233325": {
    "id": "233325",
    "film": "Odyssea",
@@ -620,7 +597,7 @@
    "presentationCode": "233331",
    "booking": "https://tickets.cinemacity.cz/order/233331",
    "soldOut": false,
-   "availabilityRatio": 0.1896
+   "availabilityRatio": 0.1844
   },
   "233332": {
    "id": "233332",
@@ -942,7 +919,7 @@
    "presentationCode": "233345",
    "booking": "https://tickets.cinemacity.cz/order/233345",
    "soldOut": false,
-   "availabilityRatio": 0.0909
+   "availabilityRatio": 0.0935
   },
   "233346": {
    "id": "233346",
@@ -1241,7 +1218,7 @@
    "presentationCode": "233358",
    "booking": "https://tickets.cinemacity.cz/order/233358",
    "soldOut": false,
-   "availabilityRatio": 0.1273
+   "availabilityRatio": 0.1169
   },
   "233359": {
    "id": "233359",
