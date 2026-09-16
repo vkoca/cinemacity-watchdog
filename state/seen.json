@@ -1,6 +1,29 @@
 {
- "updated": "2026-09-16T18:42:37",
+ "updated": "2026-09-16T19:05:35",
  "events": {
+  "241574": {
+   "id": "241574",
+   "film": "Odyssea",
+   "filmLink": "https://www.cinemacity.cz/films/odyssea/7268s2r",
+   "cinema": "Praha Flora, OC FLORA",
+   "cinemaId": "1052",
+   "datetime": "2026-09-16T20:30:00",
+   "auditorium": "IMAX VOLVO",
+   "attrs": [
+    "15-plus",
+    "2d",
+    "70-mm",
+    "drama",
+    "first-subbed-lang-cs",
+    "history",
+    "original-lang-en",
+    "subbed"
+   ],
+   "presentationCode": "241574",
+   "booking": "https://tickets.cinemacity.cz/order/241574",
+   "soldOut": false,
+   "availabilityRatio": 0.1403
+  },
   "241575": {
    "id": "241575",
    "film": "Odyssea",
@@ -22,7 +45,7 @@
    "presentationCode": "241575",
    "booking": "https://tickets.cinemacity.cz/order/241575",
    "soldOut": false,
-   "availabilityRatio": 0.4208
+   "availabilityRatio": 0.4182
   },
   "241576": {
    "id": "241576",
@@ -321,7 +344,7 @@
    "presentationCode": "248902",
    "booking": "https://tickets.cinemacity.cz/order/248902",
    "soldOut": false,
-   "availabilityRatio": 0.226
+   "availabilityRatio": 0.2156
   },
   "248903": {
    "id": "248903",
@@ -482,7 +505,7 @@
    "presentationCode": "248910",
    "booking": "https://tickets.cinemacity.cz/order/248910",
    "soldOut": false,
-   "availabilityRatio": 0.3688
+   "availabilityRatio": 0.3662
   },
   "248911": {
    "id": "248911",
@@ -551,7 +574,7 @@
    "presentationCode": "248913",
    "booking": "https://tickets.cinemacity.cz/order/248913",
    "soldOut": false,
-   "availabilityRatio": 0.3532
+   "availabilityRatio": 0.3481
   },
   "248912": {
    "id": "248912",
@@ -597,7 +620,7 @@
    "presentationCode": "248915",
    "booking": "https://tickets.cinemacity.cz/order/248915",
    "soldOut": false,
-   "availabilityRatio": 0.5584
+   "availabilityRatio": 0.5558
   },
   "248916": {
    "id": "248916",
@@ -666,7 +689,7 @@
    "presentationCode": "248920",
    "booking": "https://tickets.cinemacity.cz/order/248920",
    "soldOut": false,
-   "availabilityRatio": 0.4156
+   "availabilityRatio": 0.4104
   },
   "248919": {
    "id": "248919",
