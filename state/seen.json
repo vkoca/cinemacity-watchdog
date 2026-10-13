@@ -1,52 +1,6 @@
 {
- "updated": "2026-10-12T21:45:38",
+ "updated": "2026-10-13T17:06:52",
  "events": {
-  "263365": {
-   "id": "263365",
-   "film": "Odyssea",
-   "filmLink": "https://www.cinemacity.cz/films/odyssea/7268s2r",
-   "cinema": "Praha Flora, OC FLORA",
-   "cinemaId": "1052",
-   "datetime": "2026-10-13T12:50:00",
-   "auditorium": "IMAX VOLVO",
-   "attrs": [
-    "15-plus",
-    "2d",
-    "70-mm",
-    "drama",
-    "first-subbed-lang-cs",
-    "history",
-    "original-lang-en",
-    "subbed"
-   ],
-   "presentationCode": "263365",
-   "booking": "https://tickets.cinemacity.cz/order/263365",
-   "soldOut": false,
-   "availabilityRatio": 0.7974
-  },
-  "263362": {
-   "id": "263362",
-   "film": "Odyssea",
-   "filmLink": "https://www.cinemacity.cz/films/odyssea/7268s2r",
-   "cinema": "Praha Flora, OC FLORA",
-   "cinemaId": "1052",
-   "datetime": "2026-10-13T16:40:00",
-   "auditorium": "IMAX VOLVO",
-   "attrs": [
-    "15-plus",
-    "2d",
-    "70-mm",
-    "drama",
-    "first-subbed-lang-cs",
-    "history",
-    "original-lang-en",
-    "subbed"
-   ],
-   "presentationCode": "263362",
-   "booking": "https://tickets.cinemacity.cz/order/263362",
-   "soldOut": false,
-   "availabilityRatio": 0.4857
-  },
   "263359": {
    "id": "263359",
    "film": "Odyssea",
@@ -62,13 +16,12 @@
     "drama",
     "first-subbed-lang-cs",
     "history",
-    "original-lang-en",
     "subbed"
    ],
    "presentationCode": "263359",
    "booking": "https://tickets.cinemacity.cz/order/263359",
    "soldOut": false,
-   "availabilityRatio": 0.4286
+   "availabilityRatio": 0.3792
   },
   "263366": {
    "id": "263366",
@@ -85,13 +38,12 @@
     "drama",
     "first-subbed-lang-cs",
     "history",
-    "original-lang-en",
     "subbed"
    ],
    "presentationCode": "263366",
    "booking": "https://tickets.cinemacity.cz/order/263366",
    "soldOut": false,
-   "availabilityRatio": 0.8078
+   "availabilityRatio": 0.7558
   },
   "263363": {
    "id": "263363",
@@ -108,13 +60,12 @@
     "drama",
     "first-subbed-lang-cs",
     "history",
-    "original-lang-en",
     "subbed"
    ],
    "presentationCode": "263363",
    "booking": "https://tickets.cinemacity.cz/order/263363",
    "soldOut": false,
-   "availabilityRatio": 0.5584
+   "availabilityRatio": 0.5481
   },
   "263360": {
    "id": "263360",
@@ -131,13 +82,12 @@
     "drama",
     "first-subbed-lang-cs",
     "history",
-    "original-lang-en",
     "subbed"
    ],
    "presentationCode": "263360",
    "booking": "https://tickets.cinemacity.cz/order/263360",
    "soldOut": false,
-   "availabilityRatio": 0.439
+   "availabilityRatio": 0.3922
   },
   "264134": {
    "id": "264134",
@@ -154,13 +104,12 @@
     "drama",
     "first-subbed-lang-cs",
     "history",
-    "original-lang-en",
     "subbed"
    ],
    "presentationCode": "264134",
    "booking": "https://tickets.cinemacity.cz/order/264134",
    "soldOut": false,
-   "availabilityRatio": 0.987
+   "availabilityRatio": 0.9403
   },
   "264430": {
    "id": "264430",
@@ -177,13 +126,12 @@
     "drama",
     "first-subbed-lang-cs",
     "history",
-    "original-lang-en",
     "subbed"
    ],
    "presentationCode": "264430",
    "booking": "https://tickets.cinemacity.cz/order/264430",
    "soldOut": false,
-   "availabilityRatio": 0.9584
+   "availabilityRatio": 0.8416
   },
   "265544": {
    "id": "265544",
@@ -200,13 +148,12 @@
     "drama",
     "first-subbed-lang-cs",
     "history",
-    "original-lang-en",
     "subbed"
    ],
    "presentationCode": "265544",
    "booking": "https://tickets.cinemacity.cz/order/265544",
    "soldOut": false,
-   "availabilityRatio": 0.9844
+   "availabilityRatio": 0.8519
   },
   "265589": {
    "id": "265589",
@@ -223,13 +170,12 @@
     "drama",
     "first-subbed-lang-cs",
     "history",
-    "original-lang-en",
     "subbed"
    ],
    "presentationCode": "265589",
    "booking": "https://tickets.cinemacity.cz/order/265589",
    "soldOut": false,
-   "availabilityRatio": 0.9273
+   "availabilityRatio": 0.6519
   },
   "265655": {
    "id": "265655",
@@ -246,13 +192,12 @@
     "drama",
     "first-subbed-lang-cs",
     "history",
-    "original-lang-en",
     "subbed"
    ],
    "presentationCode": "265655",
    "booking": "https://tickets.cinemacity.cz/order/265655",
    "soldOut": false,
-   "availabilityRatio": 0.9948
+   "availabilityRatio": 0.8519
   },
   "265654": {
    "id": "265654",
@@ -269,13 +214,12 @@
     "drama",
     "first-subbed-lang-cs",
     "history",
-    "original-lang-en",
     "subbed"
    ],
    "presentationCode": "265654",
    "booking": "https://tickets.cinemacity.cz/order/265654",
    "soldOut": false,
-   "availabilityRatio": 0.9273
+   "availabilityRatio": 0.6909
   },
   "264431": {
    "id": "264431",
@@ -292,13 +236,12 @@
     "drama",
     "first-subbed-lang-cs",
     "history",
-    "original-lang-en",
     "subbed"
    ],
    "presentationCode": "264431",
    "booking": "https://tickets.cinemacity.cz/order/264431",
    "soldOut": false,
-   "availabilityRatio": 0.9688
+   "availabilityRatio": 0.9065
   },
   "264432": {
    "id": "264432",
@@ -315,13 +258,12 @@
     "drama",
     "first-subbed-lang-cs",
     "history",
-    "original-lang-en",
     "subbed"
    ],
    "presentationCode": "264432",
    "booking": "https://tickets.cinemacity.cz/order/264432",
    "soldOut": false,
-   "availabilityRatio": 0.9896
+   "availabilityRatio": 0.9558
   },
   "264433": {
    "id": "264433",
@@ -338,13 +280,12 @@
     "drama",
     "first-subbed-lang-cs",
     "history",
-    "original-lang-en",
     "subbed"
    ],
    "presentationCode": "264433",
    "booking": "https://tickets.cinemacity.cz/order/264433",
    "soldOut": false,
-   "availabilityRatio": 1.0
+   "availabilityRatio": 0.9688
   }
  }
 }
